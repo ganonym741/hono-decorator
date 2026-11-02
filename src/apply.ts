@@ -8,7 +8,11 @@ export type ApplyControllerOption = {
   basePath?: string;
 };
 
-export function applyController(hono: Hono, controller: object, option: ApplyControllerOption = {}): void {
+export function applyController(
+  hono: Hono<any, any>,
+  controller: object,
+  option: ApplyControllerOption = {},
+): void {
   if (typeof controller !== "object" || controller === null) {
     throw new TypeError("The controller must be an object type");
   }
@@ -35,8 +39,10 @@ export function applyController(hono: Hono, controller: object, option: ApplyCon
     };
     const middleware: MiddlewareHandler[] = [entryHandler, ...(endpointApplyMeta.useMiddlewares ?? [])];
     if (!endpointApplyMeta.method) {
+      //@ts-ignore hono.all() type does not support variadic middleware, but it actually works
       hono.all(path, ...middleware, handler);
     } else {
+      //@ts-ignore hono.on() type does not support variadic middleware, but it actually works
       hono.on(endpointApplyMeta.method, path, ...middleware, handler);
     }
   }

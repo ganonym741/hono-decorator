@@ -1,21 +1,22 @@
 {
   "name": "@asla/hono-decorator",
   "exports": "./src/mod.ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "tasks": {
-    "test": "deno run -A npm:vitest run",
+    "publish-dry": "deno publish --allow-dirty --dry-run",
+    "test": "deno x vitest run",
     "check-type": "deno check src test",
     "check-fmt": "deno fmt --check src test",
     "build": "deno run -A npm:typescript/tsc -p tsconfig.build.json"
+  },
+  "imports": {
+    "@asla/hono-decorator": "./src/mod.ts"
   },
   "compilerOptions": {
     "lib": ["es2023", "deno.window"]
   },
   "fmt": {
     "lineWidth": 120
-  },
-  "imports": {
-    "hono": "npm:hono@^4.7.2"
   },
   "license": "MIT",
   "publish": {
